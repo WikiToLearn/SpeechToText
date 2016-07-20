@@ -1,0 +1,36 @@
+{
+    "name":"SpeechToText",
+    "version":"0.0.1",
+    "author":[
+        "Luca Toma"
+    ],
+    "url":"https://github.com/WikiToLearn/SpeechToText",
+    "descriptionmsg":"",
+    "license-name":"GPLv3",
+    "type":"other",
+    "AutoloadClasses":{
+        "SpeechToText":"SpeechToText.php"
+    },
+    "ResourceFileModulePaths": {
+        "localBasePath": ""
+    },
+    "ResourceModules": {
+        "ext.SpeechToText.visualEditor": {
+           "scripts":[
+                "modules/ve-speechToText/ve.ui.SpeechToTextTool.js",
+                "modules/ve-speechToText/ve.ui.SpeechToTextDialog.js"
+            ],
+            "dependencies": [
+                "ext.visualEditor.mwcore",
+                "mediawiki.util"
+            ]
+        }
+    },
+    "VisualEditorPluginModules": [
+        "ext.SpeechToText.visualEditor"
+    ],
+    "config":{
+
+    },
+    "manifest_version":1
+}
