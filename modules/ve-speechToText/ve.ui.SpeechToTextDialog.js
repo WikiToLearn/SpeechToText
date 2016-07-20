@@ -45,10 +45,6 @@ if ("webkitSpeechRecognition" in window) {
             'scrollable': true,
             'padded': true,
         });
-        /*this.labelFinal = new OO.ui.LabelWidget({
-            '$': this.$,
-            'id': 'oojs-stt-final'
-        });*/
         this.labelPartial = new OO.ui.LabelWidget({
             '$': this.$,
             'id': 'oojs-stt-partial'
@@ -96,12 +92,21 @@ if ("webkitSpeechRecognition" in window) {
         recognition.start();
     };
 
-
     ve.ui.speechToTextDialog.prototype.getActionProcess = function(action) {
         var dialog = this;
         if (action === 'add') {
+          new_text = null;
+          $("#oojs-stt-final textarea").each(function(index) {
+              new_text = $(this).text();
+              $(this).text("");
+          });
 
-            console.log(this.fromInput.getValue());
+          var surfaceModel = ve.init.target.getSurface().getModel();
+          var selection = surfaceModel.getSelection();
+          // If selection is an instance of ve.dm.LinearSelection (as opposed to NullSelection or TableSelection)
+          // you can get a range (start and end offset) using:
+          var range = selection.getRange();
+          surfaceModel.getFragment().adjustLinearSelection( range.end ).collapseToStart().insertContent( new_text + "\n");
         }
         return ve.ui.speechToTextDialog.super.prototype.getActionProcess.call(this, action);
     };
