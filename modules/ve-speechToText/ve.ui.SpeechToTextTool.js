@@ -6,7 +6,7 @@ if ("webkitSpeechRecognition" in window) {
     OO.inheritClass(ve.ui.speechToTextTool, ve.ui.Tool);
 
     ve.ui.speechToTextTool.static.name = 'speechToText';
-    ve.ui.speechToTextTool.static.icon = 'tag';
+    ve.ui.speechToTextTool.static.icon = 'comment';
     ve.ui.speechToTextTool.static.title = OO.ui.deferMsg('speechToText-ve-toolname');
     ve.ui.speechToTextTool.static.autoAddToGroup = false;
     ve.ui.speechToTextTool.static.autoAddToCatchall = false;
