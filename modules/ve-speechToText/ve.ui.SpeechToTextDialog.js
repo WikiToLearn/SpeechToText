@@ -1,3 +1,12 @@
+if (!mw.messages.exists('speechToText-ve-dialog-title')) {
+    mw.messages.set({
+        'speechToText-ve-dialog-title': 'Speach To Text',
+        'speechToText-ve-dialog-add': 'Add text to the page',
+        'speechToText-ve-dialog-cancel': 'Canecl',
+        'speechToText-ve-toolname': 'Speach to text',
+    });
+}
+
 if ("webkitSpeechRecognition" in window) {
     var webkitSpeechRecognitionOBJ = new webkitSpeechRecognition();
     webkitSpeechRecognitionOBJ.continuous = true;
@@ -24,12 +33,6 @@ if ("webkitSpeechRecognition" in window) {
     webkitSpeechRecognitionOBJ.onerror = function(event) {}
     webkitSpeechRecognitionOBJ.onend = function() {}
 
-    if (!mw.messages.exists('speechToText-ve-dialog-title')) {
-        mw.messages.set({
-            'speechToText-ve-dialog-title': 'Speach To Text'
-        });
-    }
-
     ve.ui.speechToTextDialog = function(manager, config) {
         ve.ui.speechToTextDialog.parent.call(this, config);
     };
@@ -50,7 +53,7 @@ if ("webkitSpeechRecognition" in window) {
         'modes': 'intro',
         'icon': 'add'
     }, {
-        'label': OO.ui.deferMsg('visualeditor-dialog-action-cancel'),
+        'label': OO.ui.deferMsg('speechToText-ve-dialog-cancel'),
         'flags': 'safe',
         'modes': 'intro',
         'icon': 'close'
@@ -63,6 +66,7 @@ if ("webkitSpeechRecognition" in window) {
             'scrollable': true,
             'padded': true,
         });
+
         this.labelPartial = new OO.ui.LabelWidget({
             '$': this.$,
             'id': 'oojs-stt-partial'
@@ -81,16 +85,15 @@ if ("webkitSpeechRecognition" in window) {
         this.panel.$element.append(this.labelFinal.$element);
         this.panel.$element.append(this.labelPartial.$element);
         this.$body.append(this.panel.$element);
-
         webkitSpeechRecognitionOBJ.start();
     };
 
     ve.ui.speechToTextDialog.prototype.getActionProcess = function(action) {
         var dialog = this;
+        console.log("action: " + action);
         if (action === 'add') {
             this.labelPartial.setLabel("ROBEBELLE");
             //console.log(this.labelPartial.getValue());
-            console.log(ve.ui.speechToTextDialog);
             new_text = null;
             $("#oojs-stt-final textarea").each(function(index) {
                 new_text = $(this).text();
