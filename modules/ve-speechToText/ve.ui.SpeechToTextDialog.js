@@ -124,7 +124,6 @@ if ("webkitSpeechRecognition" in window) {
         var dialog = this;
         console.log("action: " + action);
         if (action === 'add') {
-            this.actions.setMode('lang');
             this.stackLayout.setItem(this.panelLang);
 
             new_text = this.labelFinal.getValue().trim();
@@ -139,9 +138,11 @@ if ("webkitSpeechRecognition" in window) {
                 this.labelPartial.setLabel("");
                 this.labelFinal.setValue("");
                 webkitSpeechRecognitionOBJ.stop();
+                this.close();
             } catch (exc) {
                 webkitSpeechRecognitionOBJ.stop();
-                alert("Something is wrong, sorry")
+                alert("Something is wrong, sorry");
+                this.close();
             }
         } else if (action == 'start') {
             webkitSpeechRecognitionOBJ.lang = this.lang_select.getSelectedItem().data;
