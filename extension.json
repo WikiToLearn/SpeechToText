@@ -2,7 +2,8 @@
     "name":"SpeechToText",
     "version":"0.0.1",
     "author":[
-        "Luca Toma"
+        "Luca Toma",
+        "Alessandro Tundo"
     ],
     "url":"https://github.com/WikiToLearn/SpeechToText",
     "descriptionmsg":"",
