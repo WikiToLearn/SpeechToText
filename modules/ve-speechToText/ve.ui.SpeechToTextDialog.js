@@ -13,10 +13,9 @@ if ("webkitSpeechRecognition" in window) {
     var webkitSpeechRecognitionOBJ = new webkitSpeechRecognition();
     webkitSpeechRecognitionOBJ.continuous = true;
     webkitSpeechRecognitionOBJ.interimResults = true;
-
+    webkitSpeechRecognitionOBJ.lang = mw.config.get("wgContentLanguage");
     webkitSpeechRecognitionOBJ.onstart = function() {
         console.log("onstart");
-
         var windowManager = ve.init.target.getSurface().getDialogs();
         var speechToTextDialog = windowManager.getCurrentWindow();
         speechToTextDialog.actions.setMode('running');
@@ -83,7 +82,7 @@ if ("webkitSpeechRecognition" in window) {
         'label': OO.ui.deferMsg('speechToText-ve-dialog-start'),
         'flags': ['primary', 'constructive'],
         'modes': 'intro',
-        'icon': 'search'
+        'icon': 'comment'
     }];
 
     ve.ui.speechToTextDialog.prototype.initialize = function() {
