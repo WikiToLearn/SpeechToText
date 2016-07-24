@@ -1,10 +1,10 @@
 if (!mw.messages.exists('speechToText-ve-dialog-title')) {
     mw.messages.set({
-        'speechToText-ve-dialog-title': 'Speach To Text',
+        'speechToText-ve-dialog-title': 'Speech To Text',
         'speechToText-ve-dialog-add': 'Add text to the page',
         'speechToText-ve-dialog-cancel': 'Canecl',
         'speechToText-ve-dialog-start': 'Start',
-        'speechToText-ve-toolname': 'Speach to text',
+        'speechToText-ve-toolname': 'Speech to text',
         'speechToText-ve-placeholder': 'Here will be the text...',
     });
 }
