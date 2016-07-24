@@ -15,18 +15,25 @@ if ("webkitSpeechRecognition" in window) {
     webkitSpeechRecognitionOBJ.onstart = function() {}
     webkitSpeechRecognitionOBJ.onresult = function(event) {
         console.log(event);
+        var windowManager = ve.init.target.getSurface().getDialogs();
+        var speechToTextDialog = windowManager.getCurrentWindow();
         for (var i = event.resultIndex; i < event.results.length; ++i) {
             if (event.results[i].isFinal) {
-                $("#oojs-stt-final textarea").each(function(index) {
+                /*$("#oojs-stt-final textarea").each(function(index) {
                     console.log(index + ": " + $(this).text());
                     current_txt = $(this).text().trim();
                     new_recog_txt = event.results[i][0].transcript.trim() + ".";
                     new_txt = current_txt + "\n" + new_recog_txt;
                     $(this).text(new_txt.trim())
-                });
-                $("#oojs-stt-partial").html("");
+                });*/
+                current_txt = speechToTextDialog.labelFinal.getValue().trim();
+                new_recog_txt = event.results[i][0].transcript.trim() + ".";
+                new_txt = current_txt + "\n" + new_recog_txt;
+                speechToTextDialog.labelFinal.setValue(new_txt.trim());
+                //$("#oojs-stt-partial").html("");
+                speechToTextDialog.labelPartial.setLabel("");
             } else {
-                $("#oojs-stt-partial").text(event.results[i][0].transcript);
+                speechToTextDialog.labelPartial.setLabel(event.results[i][0].transcript);
             }
         }
     };
@@ -95,10 +102,13 @@ if ("webkitSpeechRecognition" in window) {
             this.labelPartial.setLabel("ROBEBELLE");
             //console.log(this.labelPartial.getValue());
             new_text = null;
-            $("#oojs-stt-final textarea").each(function(index) {
+            /*$("#oojs-stt-final textarea").each(function(index) {
                 new_text = $(this).text();
                 $(this).text("");
-            });
+            });*/
+
+            new_text = this.labelFinal.getValue().trim();
+            this.labelFinal.setValue("");
 
             var surfaceModel = ve.init.target.getSurface().getModel();
             var selection = surfaceModel.getSelection();
