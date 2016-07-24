@@ -5,7 +5,7 @@ if (!mw.messages.exists('speechToText-ve-dialog-title')) {
         'speechToText-ve-dialog-cancel': 'Cancel',
         'speechToText-ve-dialog-start': 'Start',
         'speechToText-ve-toolname': 'Speech to text',
-        'speechToText-ve-placeholder': 'Here will be the text...',
+        'speechToText-ve-placeholder': 'Listening...',
     });
 }
 
