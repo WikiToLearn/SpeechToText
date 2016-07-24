@@ -10,41 +10,6 @@ if (!mw.messages.exists('speechToText-ve-dialog-title')) {
 }
 
 if ("webkitSpeechRecognition" in window) {
-    var webkitSpeechRecognitionOBJ = new webkitSpeechRecognition();
-    webkitSpeechRecognitionOBJ.continuous = true;
-    webkitSpeechRecognitionOBJ.interimResults = true;
-    webkitSpeechRecognitionOBJ.lang = mw.config.get("wgContentLanguage");
-    webkitSpeechRecognitionOBJ.onstart = function() {
-        console.log("onstart");
-        var windowManager = ve.init.target.getSurface().getDialogs();
-        var speechToTextDialog = windowManager.getCurrentWindow();
-        speechToTextDialog.actions.setMode('running');
-    }
-    webkitSpeechRecognitionOBJ.onresult = function(event) {
-        console.log("onresult");
-        console.log(event);
-        var windowManager = ve.init.target.getSurface().getDialogs();
-        var speechToTextDialog = windowManager.getCurrentWindow();
-        for (var i = event.resultIndex; i < event.results.length; ++i) {
-            if (event.results[i].isFinal) {
-                current_txt = speechToTextDialog.labelFinal.getValue().trim();
-                new_recog_txt = event.results[i][0].transcript.trim() + ".";
-                new_txt = current_txt + "\n" + new_recog_txt;
-                speechToTextDialog.labelFinal.setValue(new_txt.trim());
-                speechToTextDialog.labelPartial.setLabel("");
-            } else {
-                speechToTextDialog.labelPartial.setLabel(event.results[i][0].transcript);
-            }
-        }
-    };
-    webkitSpeechRecognitionOBJ.onerror = function(event) {
-        console.log("onerror");
-        console.log(event);
-    }
-    webkitSpeechRecognitionOBJ.onend = function() {
-        console.log("onend");
-    }
-
     ve.ui.speechToTextDialog = function(manager, config) {
         ve.ui.speechToTextDialog.parent.call(this, manager, config);
     };
@@ -59,7 +24,7 @@ if ("webkitSpeechRecognition" in window) {
     ve.ui.speechToTextDialog.prototype.getSetupProcess = function(data) {
         return ve.ui.speechToTextDialog.super.prototype.getSetupProcess.call(this, data)
             .next(function() {
-                this.actions.setMode('intro');
+                this.actions.setMode('lang');
             }, this);
     };
 
@@ -75,19 +40,24 @@ if ("webkitSpeechRecognition" in window) {
     }, {
         'label': OO.ui.deferMsg('speechToText-ve-dialog-cancel'),
         'flags': 'safe',
-        'modes': ['intro', 'running'],
+        'modes': ['lang', 'running'],
         'icon': 'close'
     }, {
         'action': 'start',
         'label': OO.ui.deferMsg('speechToText-ve-dialog-start'),
         'flags': ['primary', 'constructive'],
-        'modes': 'intro',
+        'modes': 'lang',
         'icon': 'comment'
     }];
 
     ve.ui.speechToTextDialog.prototype.initialize = function() {
         ve.ui.speechToTextDialog.super.prototype.initialize.call(this);
         this.panel = new OO.ui.PanelLayout({
+            '$': this.$,
+            'scrollable': true,
+            'padded': true,
+        });
+        this.panelLang = new OO.ui.PanelLayout({
             '$': this.$,
             'scrollable': true,
             'padded': true,
@@ -107,17 +77,55 @@ if ("webkitSpeechRecognition" in window) {
             'placeholder': mw.msg('speechToText-ve-placeholder')
         });
 
+        this.lang_select = new OO.ui.SelectWidget({});
+        default_lang = null;
+        for (k = 0; k < webkitSpeechRecognitionLangs.length; k++) {
+            for (q = 1; q < webkitSpeechRecognitionLangs[k].length; q++) {
+                if (webkitSpeechRecognitionLangs[k][q].length == 1) {
+                    wklang_label = webkitSpeechRecognitionLangs[k][0];
+                    wklang_data = webkitSpeechRecognitionLangs[k][1];
+                } else {
+                    wklang_label = webkitSpeechRecognitionLangs[k][0] + " (" + webkitSpeechRecognitionLangs[k][q][1] + ")";
+                    wklang_data = webkitSpeechRecognitionLangs[k][q][0];
+                }
+                zeroindex = false;
+                if (default_lang === null) {
+                    if (wklang_data.toString().substring(0, mw.config.get("wgContentLanguage").length) == mw.config.get("wgContentLanguage")) {
+                        default_lang = wklang_data;
+                        zeroindex = true;
+                    }
+                }
+                new_elem = new OO.ui.OptionWidget({
+                    data: wklang_data,
+                    label: wklang_label,
+                });
+                if (zeroindex) {
+                    this.lang_select.addItems([new_elem], 0);
+                } else {
+                    this.lang_select.addItems([new_elem]);
+                }
+            }
+        }
+        this.lang_select.selectItemByData(default_lang);
 
         this.panel.$element.append(this.labelFinal.$element);
         this.panel.$element.append(this.labelPartial.$element);
-        this.$body.append(this.panel.$element);
+        this.panelLang.$element.append(this.lang_select.$element);
+
+        this.stackLayout = new OO.ui.StackLayout({
+            items: [this.panelLang, this.panel]
+        });
+        this.$body.append(this.stackLayout.$element);
+
+        //this.$body.append(this.panel.$element);
     };
 
     ve.ui.speechToTextDialog.prototype.getActionProcess = function(action) {
         var dialog = this;
         console.log("action: " + action);
         if (action === 'add') {
-            this.actions.setMode('intro');
+            this.actions.setMode('lang');
+            this.stackLayout.setItem(this.panelLang);
 
             new_text = this.labelFinal.getValue().trim();
 
@@ -130,14 +138,18 @@ if ("webkitSpeechRecognition" in window) {
 
                 this.labelPartial.setLabel("");
                 this.labelFinal.setValue("");
+                webkitSpeechRecognitionOBJ.stop();
             } catch (exc) {
+                webkitSpeechRecognitionOBJ.stop();
                 alert("Something is wrong, sorry")
             }
-            webkitSpeechRecognitionOBJ.stop();
         } else if (action == 'start') {
+            webkitSpeechRecognitionOBJ.lang = this.lang_select.getSelectedItem().data;
             webkitSpeechRecognitionOBJ.start();
+            this.stackLayout.setItem(this.panel);
         } else {
-            this.actions.setMode('intro');
+            this.actions.setMode('lang');
+            this.stackLayout.setItem(this.panelLang);
 
             webkitSpeechRecognitionOBJ.stop();
         }

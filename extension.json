@@ -19,7 +19,8 @@
         "ext.SpeechToText.visualEditor": {
            "scripts":[
                 "modules/ve-speechToText/ve.ui.SpeechToTextTool.js",
-                "modules/ve-speechToText/ve.ui.SpeechToTextDialog.js"
+                "modules/ve-speechToText/ve.ui.SpeechToTextDialog.js",
+                "modules/ve-speechToText/ve.ui.SpeechToTextWebKit.js"
             ],
             "dependencies": [
                 "ext.visualEditor.mwcore",
