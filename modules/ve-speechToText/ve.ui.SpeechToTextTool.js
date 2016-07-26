@@ -10,13 +10,15 @@ if ("webkitSpeechRecognition" in window) {
     ve.ui.speechToTextTool.static.title = OO.ui.deferMsg('speechToText-ve-toolname');
     ve.ui.speechToTextTool.static.autoAddToGroup = false;
     ve.ui.speechToTextTool.static.autoAddToCatchall = false;
-
     ve.ui.speechToTextTool.prototype.onSelect = function() {
         this.toolbar.getSurface().execute('window', 'open', 'speechToTextDialog', null);
     };
 
     ve.ui.speechToTextTool.prototype.onUpdateState = function() {
         this.setActive(false);
+        var surfaceModel = ve.init.target.getSurface().getModel();
+        var selection = surfaceModel.getSelection();
+        this.setDisabled(selection.constructor.name!='VeDmLinearSelection');
     };
 
     ve.init.mw.Target.static.toolbarGroups.push({
