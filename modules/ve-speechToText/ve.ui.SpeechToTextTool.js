@@ -14,11 +14,13 @@ if ("webkitSpeechRecognition" in window) {
         this.toolbar.getSurface().execute('window', 'open', 'speechToTextDialog', null);
     };
 
-    ve.ui.speechToTextTool.prototype.onUpdateState = function() {
+    ve.ui.speechToTextTool.prototype.onUpdateState = function(fragment) {
+        ve.ui.FormatTool.super.prototype.onUpdateState.apply(this, arguments);
+
         this.setActive(false);
         var surfaceModel = ve.init.target.getSurface().getModel();
         var selection = surfaceModel.getSelection();
-        this.setDisabled(selection.constructor.name!='VeDmLinearSelection');
+        this.setDisabled(!(selection instanceof ve.dm.LinearSelection));
     };
 
     ve.init.mw.Target.static.toolbarGroups.push({
