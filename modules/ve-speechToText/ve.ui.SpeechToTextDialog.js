@@ -81,12 +81,14 @@ if ("webkitSpeechRecognition" in window) {
         var default_lang = null;
         for (var k = 0; k < webkitSpeechRecognitionLangs.length; k++) {
             for (var q = 1; q < webkitSpeechRecognitionLangs[k].length; q++) {
+                var wklang_label = null;
+                var wklang_data = null;
                 if (webkitSpeechRecognitionLangs[k][q].length === 1) {
-                    var wklang_label = webkitSpeechRecognitionLangs[k][0];
-                    var wklang_data = webkitSpeechRecognitionLangs[k][1];
+                    wklang_label = webkitSpeechRecognitionLangs[k][0];
+                    wklang_data = webkitSpeechRecognitionLangs[k][1];
                 } else {
-                    var wklang_label = webkitSpeechRecognitionLangs[k][0] + " (" + webkitSpeechRecognitionLangs[k][q][1] + ")";
-                    var wklang_data = webkitSpeechRecognitionLangs[k][q][0];
+                    wklang_label = webkitSpeechRecognitionLangs[k][0] + " (" + webkitSpeechRecognitionLangs[k][q][1] + ")";
+                    wklang_data = webkitSpeechRecognitionLangs[k][q][0];
                 }
                 var zeroindex = false;
                 if (default_lang === null) {
