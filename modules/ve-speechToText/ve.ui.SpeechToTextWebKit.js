@@ -83,15 +83,11 @@ if ("webkitSpeechRecognition" in window) {
     webkitSpeechRecognitionOBJ.lang = mw.config.get("wgContentLanguage");
     
     webkitSpeechRecognitionOBJ.onstart = function() {
-        console.log("onstart");
-
         var windowManager = ve.init.target.getSurface().getDialogs();
         var speechToTextDialog = windowManager.getCurrentWindow();
         speechToTextDialog.actions.setMode('running');
     }
     webkitSpeechRecognitionOBJ.onresult = function(event) {
-        console.log("onresult");
-        console.log(event);
         var windowManager = ve.init.target.getSurface().getDialogs();
         var speechToTextDialog = windowManager.getCurrentWindow();
         for (var i = event.resultIndex; i < event.results.length; ++i) {
@@ -107,10 +103,7 @@ if ("webkitSpeechRecognition" in window) {
         }
     };
     webkitSpeechRecognitionOBJ.onerror = function(event) {
-        console.log("onerror");
-        console.log(event);
     }
     webkitSpeechRecognitionOBJ.onend = function() {
-        console.log("onend");
     }
 }
