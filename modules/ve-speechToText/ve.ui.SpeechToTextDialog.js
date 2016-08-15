@@ -79,23 +79,23 @@ if ("webkitSpeechRecognition" in window) {
 
         this.lang_select = new OO.ui.SelectWidget({});
         var default_lang = null;
-        for (k = 0; k < webkitSpeechRecognitionLangs.length; k++) {
-            for (q = 1; q < webkitSpeechRecognitionLangs[k].length; q++) {
+        for (var k = 0; k < webkitSpeechRecognitionLangs.length; k++) {
+            for (var q = 1; q < webkitSpeechRecognitionLangs[k].length; q++) {
                 if (webkitSpeechRecognitionLangs[k][q].length === 1) {
-                    wklang_label = webkitSpeechRecognitionLangs[k][0];
-                    wklang_data = webkitSpeechRecognitionLangs[k][1];
+                    var wklang_label = webkitSpeechRecognitionLangs[k][0];
+                    var wklang_data = webkitSpeechRecognitionLangs[k][1];
                 } else {
-                    wklang_label = webkitSpeechRecognitionLangs[k][0] + " (" + webkitSpeechRecognitionLangs[k][q][1] + ")";
-                    wklang_data = webkitSpeechRecognitionLangs[k][q][0];
+                    var wklang_label = webkitSpeechRecognitionLangs[k][0] + " (" + webkitSpeechRecognitionLangs[k][q][1] + ")";
+                    var wklang_data = webkitSpeechRecognitionLangs[k][q][0];
                 }
-                zeroindex = false;
+                var zeroindex = false;
                 if (default_lang === null) {
                     if (wklang_data.toString().substring(0, mw.config.get("wgContentLanguage").length) === mw.config.get("wgContentLanguage")) {
                         default_lang = wklang_data;
                         zeroindex = true;
                     }
                 }
-                new_elem = new OO.ui.OptionWidget({
+                var new_elem = new OO.ui.OptionWidget({
                     data: wklang_data,
                     label: wklang_label,
                 });
@@ -116,8 +116,6 @@ if ("webkitSpeechRecognition" in window) {
             items: [this.panelLang, this.panel]
         });
         this.$body.append(this.stackLayout.$element);
-
-        //this.$body.append(this.panel.$element);
     };
 
     ve.ui.speechToTextDialog.prototype.getActionProcess = function(action) {
