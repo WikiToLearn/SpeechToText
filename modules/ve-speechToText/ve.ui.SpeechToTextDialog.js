@@ -78,7 +78,7 @@ if ("webkitSpeechRecognition" in window) {
         });
 
         this.lang_select = new OO.ui.SelectWidget({});
-        default_lang = null;
+        var default_lang = null;
         for (k = 0; k < webkitSpeechRecognitionLangs.length; k++) {
             for (q = 1; q < webkitSpeechRecognitionLangs[k].length; q++) {
                 if (webkitSpeechRecognitionLangs[k][q].length === 1) {
