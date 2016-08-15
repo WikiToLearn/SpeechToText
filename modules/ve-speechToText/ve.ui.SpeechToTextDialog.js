@@ -121,7 +121,6 @@ if ("webkitSpeechRecognition" in window) {
     };
 
     ve.ui.speechToTextDialog.prototype.getActionProcess = function(action) {
-        console.log("action: " + action);
         if (action === 'add') {
             this.stackLayout.setItem(this.panelLang);
 
