@@ -139,7 +139,7 @@ if ("webkitSpeechRecognition" in window) {
                 this.close();
             } catch (exc) {
                 webkitSpeechRecognitionOBJ.stop();
-                alert("Something is wrong, sorry");
+                // FIXME: "Something is wrong, sorry";
                 this.close();
             }
         } else if (action === 'start') {
