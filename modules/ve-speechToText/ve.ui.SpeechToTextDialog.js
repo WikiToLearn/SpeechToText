@@ -81,7 +81,7 @@ if ("webkitSpeechRecognition" in window) {
         default_lang = null;
         for (k = 0; k < webkitSpeechRecognitionLangs.length; k++) {
             for (q = 1; q < webkitSpeechRecognitionLangs[k].length; q++) {
-                if (webkitSpeechRecognitionLangs[k][q].length == 1) {
+                if (webkitSpeechRecognitionLangs[k][q].length === 1) {
                     wklang_label = webkitSpeechRecognitionLangs[k][0];
                     wklang_data = webkitSpeechRecognitionLangs[k][1];
                 } else {
@@ -90,7 +90,7 @@ if ("webkitSpeechRecognition" in window) {
                 }
                 zeroindex = false;
                 if (default_lang === null) {
-                    if (wklang_data.toString().substring(0, mw.config.get("wgContentLanguage").length) == mw.config.get("wgContentLanguage")) {
+                    if (wklang_data.toString().substring(0, mw.config.get("wgContentLanguage").length) === mw.config.get("wgContentLanguage")) {
                         default_lang = wklang_data;
                         zeroindex = true;
                     }
@@ -143,7 +143,7 @@ if ("webkitSpeechRecognition" in window) {
                 alert("Something is wrong, sorry");
                 this.close();
             }
-        } else if (action == 'start') {
+        } else if (action === 'start') {
             webkitSpeechRecognitionOBJ.lang = this.lang_select.getSelectedItem().data;
             webkitSpeechRecognitionOBJ.start();
             this.stackLayout.setItem(this.panel);
