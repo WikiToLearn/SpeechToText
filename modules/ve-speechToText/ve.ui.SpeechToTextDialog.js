@@ -81,8 +81,8 @@ if ("webkitSpeechRecognition" in window) {
         var default_lang = null;
         for (var k = 0; k < webkitSpeechRecognitionLangs.length; k++) {
             for (var q = 1; q < webkitSpeechRecognitionLangs[k].length; q++) {
-                var wklang_label = null;
-                var wklang_data = null;
+                var wklang_label;
+                var wklang_data;
                 if (webkitSpeechRecognitionLangs[k][q].length === 1) {
                     wklang_label = webkitSpeechRecognitionLangs[k][0];
                     wklang_data = webkitSpeechRecognitionLangs[k][1];
