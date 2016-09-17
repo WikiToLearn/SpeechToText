@@ -8,7 +8,6 @@ if ("webkitSpeechRecognition" in window) {
         var windowManager = ve.init.target.getSurface().getDialogs();
         var speechToTextDialog = windowManager.getCurrentWindow();
         speechToTextDialog.actions.setMode('running');
-        speechToTextDialog.stackLayout.setItem(this.panel);
         speechToTextDialog.labelFinal.setReadOnly(true);
     }
     webkitSpeechRecognitionOBJ.onresult = function(event) {
