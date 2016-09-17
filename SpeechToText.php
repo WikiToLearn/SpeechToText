@@ -5,12 +5,12 @@ if (!defined('MEDIAWIKI')){
 }
 if(function_exists('wfLoadExtension')) {
     wfLoadExtension('SpeechToText');
-    
-    wfWarn( "Deprecated entry point to EasyLink. Please use wfLoadExtension('EasyLink').");
-    
+
+    wfWarn( "Deprecated entry point to SpeechToText. Please use wfLoadExtension('SpeechToText').");
+
 }
 else
 {
-    die("MediaWiki version 1.25+ is required to use the EasyLink extension");
+    die("MediaWiki version 1.25+ is required to use the SpeechToText extension");
 }
 ?>
