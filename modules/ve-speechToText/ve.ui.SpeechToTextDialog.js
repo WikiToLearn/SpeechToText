@@ -35,23 +35,23 @@ if ("webkitSpeechRecognition" in window) {
     ve.ui.speechToTextDialog.static.actions = [{
         'label': OO.ui.deferMsg('speechToText-ve-dialog-cancel'),
         'flags': 'safe',
-        'modes': ['lang', 'running','done'],
+        'modes': ['lang', 'running', 'done'],
         'icon': 'close'
     }, {
         'action': 'stop',
         'label': OO.ui.deferMsg('speechToText-ve-dialog-stop'),
+        'flags': ['primary', 'destructive'],
         'modes': 'running',
         'icon': 'stop'
     }, {
         'action': 'start',
         'label': OO.ui.deferMsg('speechToText-ve-dialog-start'),
-        'flags': ['primary', 'constructive'],
-        'modes': ['lang','done'],
+        'flags': ['primary', 'progressive'],
+        'modes': ['lang', 'done'],
         'icon': 'comment'
-    },{
+    }, {
         'action': 'add',
         'label': OO.ui.deferMsg('speechToText-ve-dialog-add'),
-        'flags': ['primary', 'constructive'],
         'modes': 'done',
         'icon': 'add'
     }];
