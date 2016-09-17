@@ -1,9 +1,9 @@
 <?php
-/*Entry point */
-if (!defined('MEDIAWIKI')){
+
+if (!defined('MEDIAWIKI')) {
     die();
 }
-if(function_exists('wfLoadExtension')) {
+if (function_exists('wfLoadExtension')) {
     wfLoadExtension('SpeechToText');
 
     wfWarn( "Deprecated entry point to SpeechToText. Please use wfLoadExtension('SpeechToText').");
