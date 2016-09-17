@@ -142,11 +142,9 @@ if ("webkitSpeechRecognition" in window) {
                 this.close();
             }
         } else if (action === 'start') {
-            this.stackLayout.setItem(this.panel);
             webkitSpeechRecognitionOBJ.lang = this.lang_select.getSelectedItem().data;
             webkitSpeechRecognitionOBJ.start();
         } else if (action === 'stop') {
-            this.stackLayout.setItem(this.panel);
             webkitSpeechRecognitionOBJ.stop();
         } else {
             this.actions.setMode('lang');
