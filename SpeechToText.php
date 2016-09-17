@@ -1,16 +1,12 @@
 <?php
-/*Entry point */
-if (!defined('MEDIAWIKI')){
+
+if (!defined('MEDIAWIKI')) {
     die();
 }
-if(function_exists('wfLoadExtension')) {
+if (function_exists('wfLoadExtension')) {
     wfLoadExtension('SpeechToText');
-    
-    wfWarn( "Deprecated entry point to EasyLink. Please use wfLoadExtension('EasyLink').");
-    
+
+    wfWarn("Deprecated entry point to EasyLink. Please use wfLoadExtension('EasyLink').");
+} else {
+    die('MediaWiki version 1.25+ is required to use the EasyLink extension');
 }
-else
-{
-    die("MediaWiki version 1.25+ is required to use the EasyLink extension");
-}
-?>

@@ -1,38 +1,40 @@
 {
-    "name":"SpeechToText",
-    "version":"0.0.1",
-    "author":[
+    "name": "SpeechToText",
+    "version": "0.0.1",
+    "author": [
         "Luca Toma",
         "Alessandro Tundo"
     ],
-    "url":"https://github.com/WikiToLearn/SpeechToText",
-    "descriptionmsg":"",
-    "license-name":"GPLv3",
-    "type":"other",
-    "AutoloadClasses":{
-        "SpeechToText":"SpeechToText.php"
+    "url": "https://github.com/WikiToLearn/SpeechToText",
+    "descriptionmsg": "",
+    "license-name": "GPLv3",
+    "type": "other",
+    "AutoloadClasses": {
+        "SpeechToText": "SpeechToText.php"
     },
     "ResourceFileModulePaths": {
         "localBasePath": ""
     },
     "ResourceModules": {
         "ext.SpeechToText.visualEditor": {
-           "scripts":[
+            "scripts": [
+                "modules/ve-speechToText/webkitSpeechRecognitionLangs.js",
                 "modules/ve-speechToText/ve.ui.SpeechToTextTool.js",
                 "modules/ve-speechToText/ve.ui.SpeechToTextDialog.js",
                 "modules/ve-speechToText/ve.ui.SpeechToTextWebKit.js"
             ],
             "dependencies": [
                 "ext.visualEditor.mwcore",
-                "mediawiki.util"
+                "mediawiki.util",
+                "oojs-ui"
             ]
         }
     },
     "VisualEditorPluginModules": [
         "ext.SpeechToText.visualEditor"
     ],
-    "config":{
+    "config": {
 
     },
-    "manifest_version":1
+    "manifest_version": 1
 }

@@ -6,6 +6,7 @@ if (!mw.messages.exists('speechToText-ve-dialog-title')) {
         'speechToText-ve-dialog-start': 'Start',
         'speechToText-ve-toolname': 'Speech to text',
         'speechToText-ve-placeholder': 'Listening...',
+        'speechToText-ve-dialog-stop': 'Stop',
     });
 }
 
@@ -17,7 +18,7 @@ if ("webkitSpeechRecognition" in window) {
     OO.inheritClass(ve.ui.speechToTextDialog, OO.ui.ProcessDialog);
 
     ve.ui.speechToTextDialog.prototype.getBodyHeight = function() {
-        return 320;
+        return 360;
     };
 
     /* Set the default mode of the dialog */
@@ -32,22 +33,27 @@ if ("webkitSpeechRecognition" in window) {
     ve.ui.speechToTextDialog.static.title = OO.ui.deferMsg('speechToText-ve-dialog-title');
     ve.ui.speechToTextDialog.static.size = 'large';
     ve.ui.speechToTextDialog.static.actions = [{
-        'action': 'add',
-        'label': OO.ui.deferMsg('speechToText-ve-dialog-add'),
-        'flags': ['primary', 'constructive'],
-        'modes': 'running',
-        'icon': 'add'
-    }, {
         'label': OO.ui.deferMsg('speechToText-ve-dialog-cancel'),
         'flags': 'safe',
-        'modes': ['lang', 'running'],
+        'modes': ['lang', 'running','done'],
         'icon': 'close'
+    }, {
+        'action': 'stop',
+        'label': OO.ui.deferMsg('speechToText-ve-dialog-stop'),
+        'modes': 'running',
+        'icon': 'stop'
     }, {
         'action': 'start',
         'label': OO.ui.deferMsg('speechToText-ve-dialog-start'),
         'flags': ['primary', 'constructive'],
-        'modes': 'lang',
+        'modes': ['lang','done'],
         'icon': 'comment'
+    },{
+        'action': 'add',
+        'label': OO.ui.deferMsg('speechToText-ve-dialog-add'),
+        'flags': ['primary', 'constructive'],
+        'modes': 'done',
+        'icon': 'add'
     }];
 
     ve.ui.speechToTextDialog.prototype.initialize = function() {
@@ -74,40 +80,33 @@ if ("webkitSpeechRecognition" in window) {
             'multiline': true,
             'autosize': true,
             'rows': 14,
+            'readOnly': true,
             'placeholder': mw.msg('speechToText-ve-placeholder')
         });
 
         this.lang_select = new OO.ui.SelectWidget({});
         var default_lang = null;
-        for (var k = 0; k < webkitSpeechRecognitionLangs.length; k++) {
-            for (var q = 1; q < webkitSpeechRecognitionLangs[k].length; q++) {
-                var wklang_label;
-                var wklang_data;
-                if (webkitSpeechRecognitionLangs[k][q].length === 1) {
-                    wklang_label = webkitSpeechRecognitionLangs[k][0];
-                    wklang_data = webkitSpeechRecognitionLangs[k][1];
-                } else {
-                    wklang_label = webkitSpeechRecognitionLangs[k][0] + " (" + webkitSpeechRecognitionLangs[k][q][1] + ")";
-                    wklang_data = webkitSpeechRecognitionLangs[k][q][0];
-                }
-                var zeroindex = false;
-                if (default_lang === null) {
-                    if (wklang_data.toString().substring(0, mw.config.get("wgContentLanguage").length) === mw.config.get("wgContentLanguage")) {
-                        default_lang = wklang_data;
-                        zeroindex = true;
-                    }
-                }
-                var new_elem = new OO.ui.OptionWidget({
-                    data: wklang_data,
-                    label: wklang_label,
-                });
-                if (zeroindex) {
-                    this.lang_select.addItems([new_elem], 0);
-                } else {
-                    this.lang_select.addItems([new_elem]);
+        for (label in webkitSpeechRecognitionLangs) {
+            data = webkitSpeechRecognitionLangs[label];
+
+            var zeroindex = false;
+            if (default_lang === null) {
+                if (data.toString().substring(0, mw.config.get("wgContentLanguage").length) === mw.config.get("wgContentLanguage")) {
+                    default_lang = data;
+                    zeroindex = true;
                 }
             }
+            var new_elem = new OO.ui.OptionWidget({
+                data: data,
+                label: label,
+            });
+            if (zeroindex) {
+                this.lang_select.addItems([new_elem], 0);
+            } else {
+                this.lang_select.addItems([new_elem]);
+            }
         }
+
         this.lang_select.selectItemByData(default_lang);
 
         this.panel.$element.append(this.labelFinal.$element);
@@ -145,7 +144,8 @@ if ("webkitSpeechRecognition" in window) {
         } else if (action === 'start') {
             webkitSpeechRecognitionOBJ.lang = this.lang_select.getSelectedItem().data;
             webkitSpeechRecognitionOBJ.start();
-            this.stackLayout.setItem(this.panel);
+        } else if (action === 'stop') {
+            webkitSpeechRecognitionOBJ.stop();
         } else {
             this.actions.setMode('lang');
             this.stackLayout.setItem(this.panelLang);
