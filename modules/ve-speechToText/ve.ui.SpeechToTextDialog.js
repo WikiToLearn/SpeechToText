@@ -1,15 +1,3 @@
-if (!mw.messages.exists('speechToText-ve-dialog-title')) {
-    mw.messages.set({
-        'speechToText-ve-dialog-title': 'Speech To Text',
-        'speechToText-ve-dialog-add': 'Add text to the page',
-        'speechToText-ve-dialog-cancel': 'Cancel',
-        'speechToText-ve-dialog-start': 'Start',
-        'speechToText-ve-toolname': 'Speech to text',
-        'speechToText-ve-placeholder': 'Listening...',
-        'speechToText-ve-dialog-stop': 'Stop',
-    });
-}
-
 if ("webkitSpeechRecognition" in window) {
     ve.ui.speechToTextDialog = function(manager, config) {
         ve.ui.speechToTextDialog.parent.call(this, manager, config);
@@ -30,28 +18,28 @@ if ("webkitSpeechRecognition" in window) {
     };
 
     ve.ui.speechToTextDialog.static.name = 'speechToTextDialog';
-    ve.ui.speechToTextDialog.static.title = OO.ui.deferMsg('speechToText-ve-dialog-title');
+    ve.ui.speechToTextDialog.static.title = mw.msg('speechtotext-ve-dialog-title');
     ve.ui.speechToTextDialog.static.size = 'large';
     ve.ui.speechToTextDialog.static.actions = [{
-        'label': OO.ui.deferMsg('speechToText-ve-dialog-cancel'),
+        'label': mw.msg('speechtotext-ve-dialog-cancel'),
         'flags': 'safe',
         'modes': ['lang', 'running', 'done'],
         'icon': 'close'
     }, {
         'action': 'stop',
-        'label': OO.ui.deferMsg('speechToText-ve-dialog-stop'),
+        'label': mw.msg('speechtotext-ve-dialog-stop'),
         'flags': ['primary', 'destructive'],
         'modes': 'running',
         'icon': 'stop'
     }, {
         'action': 'start',
-        'label': OO.ui.deferMsg('speechToText-ve-dialog-start'),
+        'label': mw.msg('speechtotext-ve-dialog-start'),
         'flags': ['primary', 'progressive'],
         'modes': ['lang', 'done'],
         'icon': 'comment'
     }, {
         'action': 'add',
-        'label': OO.ui.deferMsg('speechToText-ve-dialog-add'),
+        'label': mw.msg('speechtotext-ve-dialog-add'),
         'modes': 'done',
         'icon': 'add'
     }];
@@ -81,7 +69,7 @@ if ("webkitSpeechRecognition" in window) {
             'autosize': true,
             'rows': 14,
             'readOnly': true,
-            'placeholder': mw.msg('speechToText-ve-placeholder')
+            'placeholder': mw.msg('speechtotext-ve-placeholder')
         });
 
         this.lang_select = new OO.ui.SelectWidget({});

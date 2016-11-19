@@ -12,6 +12,9 @@
     "AutoloadClasses": {
         "SpeechToText": "SpeechToText.php"
     },
+    "MessagesDirs":[
+        "i18n"
+    ],
     "ResourceFileModulePaths": {
         "localBasePath": ""
     },
@@ -27,6 +30,15 @@
                 "ext.visualEditor.mwcore",
                 "mediawiki.util",
                 "oojs-ui"
+            ],
+            "messages": [
+                "speechtotext-ve-dialog-title",
+                "speechtotext-ve-dialog-add",
+                "speechtotext-ve-dialog-cancel",
+                "speechtotext-ve-dialog-start",
+                "speechtotext-ve-toolname",
+                "speechtotext-ve-placeholder",
+                "speechtotext-ve-dialog-stop"
             ]
         }
     },

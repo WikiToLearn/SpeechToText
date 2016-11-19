@@ -7,7 +7,7 @@ if ("webkitSpeechRecognition" in window) {
 
     ve.ui.speechToTextTool.static.name = 'speechToText';
     ve.ui.speechToTextTool.static.icon = 'comment';
-    ve.ui.speechToTextTool.static.title = OO.ui.deferMsg('speechToText-ve-toolname');
+    ve.ui.speechToTextTool.static.title = mw.msg('speechtotext-ve-toolname');
     ve.ui.speechToTextTool.static.autoAddToGroup = false;
     ve.ui.speechToTextTool.static.autoAddToCatchall = false;
     ve.ui.speechToTextTool.prototype.onSelect = function() {
